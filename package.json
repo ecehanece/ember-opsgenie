@@ -35,8 +35,13 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "^2.5.0",
     "ember-export-application-global": "^1.0.5",
+    "ember-highcharts": "0.5.4",
     "ember-load-initializers": "^0.5.1",
+    "ember-notify": "^5.2.1",
     "ember-resolver": "^2.0.3",
-    "loader.js": "^4.0.1"
+    "ember-semantic-ui-calendar": "0.1.0",
+    "highcharts": "5.0.12",
+    "loader.js": "^4.0.1",
+    "semantic-ui-ember": "2.0.1"
   }
 }

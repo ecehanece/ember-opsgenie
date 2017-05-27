@@ -1,0 +1,79 @@
+<div class="ui container">
+    <div class="high-charts-div">
+        {{dynamic-high-charts mode=chartMode model=model content=chartData chartOptions=chartOptions theme=theme}}
+    </div>
+    {{#ui-accordion class="styled fluid"}}
+        {{#each model.alerts as |alert|}}
+            <div {{action 'toggleBody' alert.id}} class="title">
+                <span class="ui item">
+                    <span class="ui label">Id: #{{alert.tinyId}}</span>
+                    <span class="ui label">{{alert.message}}</span>
+                    {{#if alert.owner}}
+                        <div class="ui item">Owner: {{alert.owner}}</div>
+                    {{else}}
+                        <div class="ui item">No Owner</div>
+                    {{/if}}
+                </span>
+                <span class="ui item">{{alert.createdAt}}</span>
+                {{#if alert.snoozed}}
+                    <div class="ui label">Snoozed {{alert.snoozedUntil}}</div>
+                {{/if}}
+            </div>
+            <div class="content">
+                {{#if noteOfAlert}}
+                    {{#each noteOfAlert as |note|}}
+                        <div class="ui message">
+                            {{note.note}}
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <div class="ui message">There are no notes about this alert.</div>
+                {{/if}}
+                {{#if alert.tag}}
+                    <div class="ui item">
+                        <div class="ui label">Tags</div>
+                        {{#each alert.tag as |tag|}}
+                            <span class="ui tag label">{{tag}}<i {{action 'deleteTag' alert tag}} class="delete icon"></i></span>
+                        {{/each}}
+                        {{#unless addTagClicked}}
+                            <span {{action 'addTag' alert}} class="ui label tag-button">+Add Tag</span>
+                        {{else}}
+                            <div class="ui mini input">
+                                {{input class="tag-input" value=tagInput enter=(action "updateTag" alert)}}
+                            </div>
+                        {{/unless}}
+                    </div>
+                {{/if}}
+                {{#if alert.teams}}
+                    <div class="ui item div-teams">
+                        <div class="ui label">Teams</div>
+                        {{#each alert.teams as |team|}}
+                            <span class="ui label">{{team}}</span>
+                        {{/each}}
+                    </div>
+                {{/if}}
+                <div class="ui item actions div-actions">
+                    <div class="ui buttons">
+                        <button {{action "ack" alert}} class="ui button ack-button">
+                            {{#if alert.acknowledged}}
+                                Ack'ed
+                            {{else}}
+                                Ack
+                            {{/if}}
+                        </button>
+                        <button {{action 'openSnoozeModal' alert}} class="ui button snooze-button">
+                            {{#if alert.snoozed}}
+                                Snoozed
+                            {{else}}
+                                Snooze
+                            {{/if}}
+                        </button>
+                        <button {{action 'delete' alert}} class="ui button delete-button">Delete</button>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{/ui-accordion}}
+</div>
+{{ember-notify messageStyle='semantic-ui'}}
+{{modal-component model=model snoozedAlert=snoozedAlert}}

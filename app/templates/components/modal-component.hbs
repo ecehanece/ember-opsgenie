@@ -1,0 +1,16 @@
+<i class="close icon"></i>
+<div class="header">
+    Snooze Alert
+</div>
+<div class="content">
+    {{ui-calendar date=date onChange=(action (mut date)) placeholder="Select date and time"}}
+</div>
+<div class="actions">
+    <div class="ui black deny button">
+        Cancel
+    </div>
+    <div {{action 'approveSnooze' snoozedAlert}} class="ui positive right labeled icon button">
+        Ok
+        <i class="checkmark icon"></i>
+    </div>
+</div>
